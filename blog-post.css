@@ -1,0 +1,54 @@
+/*!
+ * Start Bootstrap - Blog Post (https://startbootstrap.com/template-overviews/blog-post)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-blog-post/blob/master/LICENSE)
+ */
+
+body {
+  padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+
+
+/* small tables in left sidebar */
+.tableSmall{border:2px solid black; box-shadow: 10px 10px;}
+.tableSmall:hover{border:2px solid red; box-shadow: 10px 10px;cursor:pointer;}
+
+.centerMine{margin: 0 auto;}
+
+
+
+/* Padding for right tables on mobile-makes a margin at bottom*/
+@media screen and (max-width: 600px){  /*480*/
+.paddX{margin-bottom:20px;}
+}
+/* END Padding for right tables on mobile-makes a margin at bottom*/
+
+
+/*Mega fix, adding blank div 300 px height only for destop, on mobile this div turns to 10px height*/
+#div_spacing{height:300px;}
+/* Space div if only no mobile*/
+@media screen and (max-width: 600px){  /*480*/
+#div_spacing{height:10px;}
+}
+/* Space div if only no mobile*/
+
+
+
+
+
+/* Main Table in left*/
+.tableBig{height:200px;border-radius:12px;}
+
+
+/*assigned by JS to clicked small table*/
+.selected{background-color:green;}
+
+
+
