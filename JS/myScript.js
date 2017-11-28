@@ -8,11 +8,14 @@ $(document).ready(function(){
 // **************************************************************************************
 //                                                                                     **
                                                                                     
-$(".tableSmall").click(function(){
+$(".tableSmall_Click").click(function(){
    
    
-   tableSelectAction( $(this) );   //pass $(this) 
+   tableSelectAction( $(this) );   //pass $(this)  // function listen to your choice in right panel, which table u select & display relevant table in the right
 
+   DatetoUnix();  //convert time from input to Unix time
+
+   sendAjaxSQLSelect(); //sends Ajax request to Php_AjaxHandler/somefil.php  to retrieves info from SQL for relevant table and HTML() it
 });
 // **                                                                                  **
 // **************************************************************************************
@@ -75,6 +78,95 @@ $(".tableSmall").removeClass("selected");
 // **                                                                                  **
 // **************************************************************************************
 // **************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Convert time from input to UNIX(to save it in DB)
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     **  
+ function DatetoUnix(){
+
+// actually this array is in datePicker_MineProcessor.js  but it does not  work a global
+var Monthh = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; //General array for all click actions
+
+
+  var DateInputVAl= $("#myDateInput").val();
+  // alert(DateInputVAl);
+  DateZ=DateInputVAl.split('-');
+  var MonthDecimal=Monthh.indexOf(DateZ[1]); // get Month in decimal to use in UNix; Originally here we have month in letters (i.e "Nov")
+      MonthDecimal=MonthDecimal+1;
+//alert(MonthDecimal);
+  DateInputVAl=DateZ[3]+ "-" + MonthDecimal+ "-" +DateZ[0]; // constract var for UNIX (i.e "2013-09-05")
+
+
+  window.UnixTime=(new Date(DateInputVAl)).getTime() / 1000;
+	//var UnixTime=(new Date("2013-09-05 15:34:00")).getTime() / 1000;
+	//alert(UnixTime);
+	//alert(new Date(UnixTime * 1000)); //check if UNIX OK-> convert it normal time
+return UnixTime;
+  }
+
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
+// END Convert time from input to UNIX(to save it in DB)
+
+
+
+
+
+
+
+
+
+// sends Ajax request to Php_AjaxHandler/somefil.php  to retrieves info from SQL for relevant table and HTML() it. Passes to php vars {table + date}
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     **  
+ function sendAjaxSQLSelect(){
+     
+   var tableID=$("#mTableNumber").html();// alert(+tableID);
+   var dateID=$("#myDateInput").val();   
+   var date_UnixID=UnixTime; // from DateInputVAl  
+       //alert(date_UnixID);
+
+
+                        // send  data  to  PHP handler  ************ 
+                                 $.ajax({
+                                 url: 'Php_AjaxHandler/selectTable.php',
+                                 type: 'POST',
+                                 data: { serverTableID:tableID, serverDateID:dateID,ServerDate_UnixID:date_UnixID},
+                                 success: function(data) {
+                                 // do something;
+                                 //alert('done SQL');$('#vkTest').html(data)
+                                 // $('#result').html(data);
+                                  $("#ajaxResponse").html(data).show().show(2500);
+                                  }
+                                          });
+                                                   // }
+                                               //  END AJAXed  part 
+
+   //clear all Fields
+    // clearFields();  --confirm erase
+ 
+
+  }
+
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
+// END sendAjaxSQLSelect() ->sends Ajax request to Php_AjaxHandler/somefil.php  to retrieves info from SQL for relevant table and HTML() it
 
 
 

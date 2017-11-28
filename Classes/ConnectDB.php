@@ -63,10 +63,10 @@ private function __wakeup() {}
     $username = "root";
     $password = "root";
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=seotm", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=Booking_My", $username, $password);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "</br>Connected successfully to  DataBase_SG_tone"; 
+    echo "</br>Connected successfully to  DataBase_Booking_My"; 
     $_POST['connection_flag']='connection_flag_OK';
     }
 catch(PDOException $e)
