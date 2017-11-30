@@ -1,8 +1,8 @@
 <?php
 
 
-$tableX=$_POST['serverTableID'];
-$dateX=$_POST['serverDateID'];
+$tableX=$_POST['serverTableID']; //Table number
+$dateX=$_POST['serverDateID']; // Date timestamp
 $unixX=$_POST['ServerDate_UnixID'];// Unix  var
                      
 echo "We  got-> </br>";
@@ -13,46 +13,85 @@ echo $unixX."</br>";
 
 
 
-//$resFR = $db->query("SELECT * FROM bookingTable WHERE mvcFr_who LIKE '{$_SESSION['login']}' ");
+
 
 
 
 
 //-------------------------------------
  global $conn;
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
+  
 
+include '../Classes/ConnectDB.php';
+$singeltone=ConnectDB::getInstance(); //creates connection $con;  //was deactivated in index.php
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Starts Selecting---------------------
 try {
-     $conn = new PDO("mysql:host=$servername;dbname=Booking_My", $username, $password); // it does see singletone
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO bookingTable (b_booker,b_table,b_timeInterval)
-    VALUES ('Dima', 1, 9)";
-    // use exec() because no results are returned
-    $conn->exec($sql);
-    echo "New record created successfully";
-    }
-catch(PDOException $e)
-    {
-    echo "screwed</br>";
-    echo $sql . "<br>" . $e->getMessage();
-    }
+    //$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    
+$resFR = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['ServerDate_UnixID']}' AND 	b_table ='{$_POST['serverTableID']}' ORDER BY b_timeInterval ASC     "); //WHERE mvcFr_who LIKE '{$_SESSION['login']}'   
+//ORDER BY b_timeInterval DESC 
 
+
+//echo "</br>=>".count( ); //confirm delete
+//print_r($resFR->fetchAll());
+
+
+//Array length
+echo "</br>PDO rows length =>  ". $resFR->rowCount(); //works
+
+
+
+//--------
+ $rowF =$resFR->fetchAll();
+ echo "</br>single row=> ".$rowF[0]['b_id']; 
+//--------------------
+
+
+
+
+$resFR2 = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['ServerDate_UnixID']}' AND 	b_table ='{$_POST['serverTableID']}' ORDER BY b_timeInterval ASC     "); 
+while ($rowF2 =$resFR2->fetch())
+{
+
+echo "</br> vvvID-> ";
+echo $rowF2['b_id']; 
+
+    } //end while
+
+
+ if($resFR->rowCount()==0){echo "</br>No record fot Table ". $_POST['serverTableID'];} else  {echo "</br>Records exist ". $_POST['serverTableID'];}
+
+
+}
+catch(PDOException $e) {
+    echo "ERR-ed";
+    echo "Error: " . $e->getMessage();
+}
 $conn = null;
-
+//END   Selecting----------------------------
 
 
 //-------------------------------
 
-
-/*$sth = $conn ->prepare("INSERT INTO bookingTable(b_booker,b_table,b_timeInterval) VALUES (:logins, :passs, :birth)");
-          $sth->bindValue(':logins',"Dima");
-          $sth->bindValue(':passs',1);
-          $sth->bindValue(':birth',9);
-    
-          $sth->execute();*/
 
 
 ?>

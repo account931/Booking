@@ -13,7 +13,9 @@ $(".tableSmall_Click").click(function(){
    
    tableSelectAction( $(this) );   //pass $(this)  // function listen to your choice in right panel, which table u select & display relevant table in the right
 
-   DatetoUnix();  //convert time from input to Unix time
+   window.funcValue=DatetoUnix();  //convert time from input to Unix time->Convert from {29-Nov-Wed-2017} to {2017-11-29} amd uses it to convert to Unix time. //use variable to get two returns[].
+   
+  // DatetoDateStampSQL(); //convert time from input to SQL Datestamp ->Convert from {29-Nov-Wed-2017} to {2017-11-29}
 
    sendAjaxSQLSelect(); //sends Ajax request to Php_AjaxHandler/somefil.php  to retrieves info from SQL for relevant table and HTML() it
 });
@@ -91,7 +93,7 @@ $(".tableSmall").removeClass("selected");
 
 
 
-//Convert time from input to UNIX(to save it in DB)
+//Convert time from input to UNIX(to save it in DB) // Convert from {29-Nov-Wed-2017} to {2017-11-29} amd uses it to convert to Unix time 
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     **  
@@ -114,13 +116,20 @@ var Monthh = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	//var UnixTime=(new Date("2013-09-05 15:34:00")).getTime() / 1000;
 	//alert(UnixTime);
 	//alert(new Date(UnixTime * 1000)); //check if UNIX OK-> convert it normal time
-return UnixTime;
+return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way to return var ftom function(DatetoUnix(), which returns two var results
   }
 
 // **                                                                                  **
 // **************************************************************************************
 // **************************************************************************************
 // END Convert time from input to UNIX(to save it in DB)
+
+
+
+
+
+
+
 
 
 
@@ -137,8 +146,9 @@ return UnixTime;
  function sendAjaxSQLSelect(){
      
    var tableID=$("#mTableNumber").html();// alert(+tableID);
-   var dateID=$("#myDateInput").val();   
-   var date_UnixID=UnixTime; // from DateInputVAl  
+   var dateID=funcValue.r2;//$("#myDateInput").val();   //funcValue.r2= is the way to return var ftom function(DatetoUnix(), which returns two var results
+  // alert(dateID);
+   var date_UnixID=funcValue.r1; //UnixTime; // from DateInputVAl  
        //alert(date_UnixID);
 
 
@@ -151,7 +161,7 @@ return UnixTime;
                                  // do something;
                                  //alert('done SQL');$('#vkTest').html(data)
                                  // $('#result').html(data);
-                                  $("#ajaxResponse").html(data).show().show(2500);
+                                  $("#ajaxResponse").html(data).show().show(2500);    //setTimeout(function(){ .html(data) }, 3000);
                                   }
                                           });
                                                    // }

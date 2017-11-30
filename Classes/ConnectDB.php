@@ -66,7 +66,7 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=Booking_My", $username, $password);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "</br>Connected successfully to  DataBase_Booking_My"; 
+    echo "</br>Connected successfully to  DataBase _zzz"; 
     $_POST['connection_flag']='connection_flag_OK';
     }
 catch(PDOException $e)
