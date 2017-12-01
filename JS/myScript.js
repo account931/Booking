@@ -17,7 +17,7 @@ $(".tableSmall_Click").click(function(){
    
   // DatetoDateStampSQL(); //convert time from input to SQL Datestamp ->Convert from {29-Nov-Wed-2017} to {2017-11-29}
 
-   sendAjaxSQLSelect(); //sends Ajax request to Php_AjaxHandler/somefil.php  to retrieves info from SQL for relevant table and HTML() it
+   sendAjaxSQLSelect(); //sends Ajax request to Php_AjaxHandler/selectTable.php  to retrieves info from SQL for relevant table and HTML() it
 });
 // **                                                                                  **
 // **************************************************************************************
@@ -27,6 +27,29 @@ $(".tableSmall_Click").click(function(){
 
 
    
+
+
+
+//Start click on "book it" in SQL results display
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     **
+$(document).on("click", '.bookLink', function() {      //for newly generated                                                                             
+//$(".bookLink").click(function(){
+   //alert('f');
+   sendAjaxSQLInsert($(this)); //sends Ajax Insert request to Php_AjaxHandler/insertTAble.php  to insert data
+});
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
+//
+//END  click on "book it" in SQL results display
+
+
+
+
+
+
 
 
 
@@ -161,7 +184,7 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
                                  // do something;
                                  //alert('done SQL');$('#vkTest').html(data)
                                  // $('#result').html(data);
-                                  $("#ajaxResponse").html(data).show().show(2500);    //setTimeout(function(){ .html(data) }, 3000);
+                                  $("#ajaxResponse").html(data)/*.show()*/.show(2500);    //setTimeout(function(){ .html(data) }, 3000);
                                   }
                                           });
                                                    // }
@@ -177,6 +200,55 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
 // **************************************************************************************
 // **************************************************************************************
 // END sendAjaxSQLSelect() ->sends Ajax request to Php_AjaxHandler/somefil.php  to retrieves info from SQL for relevant table and HTML() it
+
+
+
+
+
+ 
+
+// sends Ajax request to Php_AjaxHandler/insertTable.php  to insert to SQL for relevant table.
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     **  
+ function sendAjaxSQLInsert(thisObjZ){
+
+      var idm= thisObjZ.attr("id"); //get the clicked id;
+      alert(idm);
+
+/*
+     
+   var tableID=$("#mTableNumber").html();// alert(+tableID);
+   var dateID=funcValue.r2;//$("#myDateInput").val();   //funcValue.r2= is the way to return var ftom function(DatetoUnix(), which returns two var results
+  // alert(dateID);
+   var date_UnixID=funcValue.r1; //UnixTime; // from DateInputVAl  
+       //alert(date_UnixID);
+
+
+                        // send  data  to  PHP handler  ************ 
+                                 $.ajax({
+                                 url: 'Php_AjaxHandler/insertTable.php',
+                                 type: 'POST',
+                                 data: { serverTableID:tableID, serverDateID:dateID,ServerDate_UnixID:date_UnixID},
+                                 success: function(data) {
+                                 // do something;
+                                 //alert('done SQL');$('#vkTest').html(data)
+                                 // $('#result').html(data);
+                                  $("#ajaxResponse").html(data).show(2500);    //setTimeout(function(){ .html(data) }, 3000);
+                                  }
+                                          });
+                                                   // } */
+                                               //  END AJAXed  part 
+
+  
+  }
+
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
+// END  sends Ajax request to Php_AjaxHandler/insertTable.php  to insert to SQL for relevant table.
+
+
 
 
 
