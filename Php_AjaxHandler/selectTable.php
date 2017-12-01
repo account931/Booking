@@ -48,10 +48,10 @@ try {
     //$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     
 $resFR = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['ServerDate_UnixID']}' AND 	b_table ='{$_POST['serverTableID']}' ORDER BY b_timeInterval ASC     "); //WHERE mvcFr_who LIKE '{$_SESSION['login']}'   
-//ORDER BY b_timeInterval DESC 
 
 
-//echo "</br>=>".count( ); //confirm delete
+
+
 //print_r($resFR->fetchAll());
 
 
@@ -59,29 +59,119 @@ $resFR = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['
 echo "</br>PDO rows length =>  ". $resFR->rowCount(); //works
 
 
-
+//single row
 //--------
  $rowF =$resFR->fetchAll();
- echo "</br>single row=> ".$rowF[0]['b_id']; 
+ echo "</br>single row_0=> ".$rowF[0]['b_timeInterval']; 
+ echo "</br>single row_1=> ".$rowF[1]['b_timeInterval']; 
 //--------------------
 
 
 
 
 $resFR2 = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['ServerDate_UnixID']}' AND 	b_table ='{$_POST['serverTableID']}' ORDER BY b_timeInterval ASC     "); 
+
 while ($rowF2 =$resFR2->fetch())
-{
-
+   {
 echo "</br> vvvID-> ";
-echo $rowF2['b_id']; 
-
+echo $rowF2['b_timeInterval']; 
     } //end while
 
 
- if($resFR->rowCount()==0){echo "</br>No record fot Table ". $_POST['serverTableID'];} else  {echo "</br>Records exist ". $_POST['serverTableID'];}
+ if($resFR->rowCount()==0){echo "</br>No record for Table ". $_POST['serverTableID'];} else  {echo "</br>Records exist ". $_POST['serverTableID'];}
 
 
+
+
+
+//Start Core algorithm----------------------------------------------------
+ $resFR2 = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['ServerDate_UnixID']}' AND 	b_table ='{$_POST['serverTableID']}' ORDER BY b_timeInterval ASC     "); 
+ $rowF =$resFR2->fetchAll();
+
+
+
+// Start alternative-------------
+$bIntervals=array();// array for intervals available 
+
+		foreach($rowF as $ss){
+                             array_push($bIntervals,$ss['b_timeInterval']);
+                             }
+
+
+		for($i=9; $i<18; $i++){
+             //if time exists in array  $bIntervals, displayas taken
+             if(in_array($i, $bIntervals)){ $t=$i+1; // next hour
+                                            echo "<p class='taken'> Taken =>  ".$i.  ".00-" .$t. ".00</p>";
+
+                                          }else{
+
+                  //setting var to set id and pass in it ID. A click will be assigned to .bookLink, will parse ID, and send ajax with this vars 
+                   $tz=$i+1; // i.e (10.00-Stz.00)=(10.00-11.00)
+                   $unix=$_POST['ServerDate_UnixID'];//$rowF[0]['b_bookedUnix'];// first Unix stamp from row-any of them fits, Unixtime to book
+                   $table=$_POST['serverTableID'];//$rowF[0]['b_table']; //table to book
+
+                   echo "<p class='free'> Free =>  ".$i.  ".00-" .$tz. ".00       <span class='bookLink'  id='tbTime-$i&d-$unix&tableId-$table' > book it</span>       </p>";
+            
+                 }   //end else
+
+		}  // END for($i=9; $i<19; $i++){
+
+
+// END  alternative---------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+$countZ=9; //9 hours
+
+//check array lengh, if 0, 
+if ($resFR2->rowCount()==0){$lengthZ=1;}
+else{
+$lengthZ=$resFR2->rowCount();// result array lenght
+echo "<p> Core lenghs: ".    $lengthZ.    "</p>";
 }
+
+
+for($cou=$countZ; $cou<19; $cou++)
+{
+
+	   for($j=0; $j<$lengthZ; $j++){
+                    //echo $rowF[$j]['b_timeInterval'];
+              
+				  if( $rowF[$j]['b_timeInterval']==$cou  )     {echo "<p> Taken =>  ".$cou.  ".00</p>";
+				                                                //$cou=$cou--;
+				                                                break;  
+                                                               // $cou++;
+                                                                
+				                                                
+				                                                }
+				                                                else if($rowF[$j]['b_timeInterval']!=$cou ){echo "<p> Free => ".$cou.  ".00</p>";  
+				                                                //$cou++;
+				                                               break;
+				                                                }
+
+	   }// END for($j=0; $j<$lengthZ; $j++){
+
+
+}     // END for($cou=$countZ; $cou<18; $cou++)
+*/
+//END Core algorithm-------------------------------------------------------------
+
+
+
+
+
+} //end try
 catch(PDOException $e) {
     echo "ERR-ed";
     echo "Error: " . $e->getMessage();
