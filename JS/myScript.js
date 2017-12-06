@@ -30,14 +30,48 @@ $(".tableSmall_Click").click(function(){
 
 
 
-//Start click on "book it" in SQL results display
+//Start click on "book it" in SQL results display - just show name to book accordition
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     **
 $(document).on("click", '.bookLink', function() {      //for newly generated                                                                             
 //$(".bookLink").click(function(){
-   //alert('f');
+      
+     
+     ShowNameFieldsAccordition( $(this)  ); //show/hide name fields in accordition
+   //sendAjaxSQLInsert($(this)); //sends Ajax Insert request to Php_AjaxHandler/insertTAble.php  to insert data
+});
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
+//
+//END  click on "book it" in SQL results display-just show name to book accordition
+
+
+
+
+
+
+
+
+
+
+//Start Final BOOK click on "OK" in book it section  in SQL results display
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     **
+$(document).on("click", '.bookFinal', function() {      //for newly generated                                                                             
+//$(".bookFinal").click(function(){
+     
+   
+
+     window.v= $(this).prevAll('input').val();
+     //$(this).parent().prev().find("input[type=text]:first").val();
+
+     if( v!=""  ){
+   
    sendAjaxSQLInsert($(this)); //sends Ajax Insert request to Php_AjaxHandler/insertTAble.php  to insert data
+     }else {alert('empty');}
 });
 // **                                                                                  **
 // **************************************************************************************
@@ -169,7 +203,7 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
  function sendAjaxSQLSelect(){
      
    var tableID=$("#mTableNumber").html();// alert(+tableID);
-   var dateID=funcValue.r2;//$("#myDateInput").val();   //funcValue.r2= is the way to return var ftom function(DatetoUnix(), which returns two var results
+   var dateID=funcValue.r2;//actually this value is not used //$("#myDateInput").val();   //funcValue.r2= is the way to return var ftom function(DatetoUnix(), which returns two var results
   // alert(dateID);
    var date_UnixID=funcValue.r1; //UnixTime; // from DateInputVAl  
        //alert(date_UnixID);
@@ -212,9 +246,12 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
 // **************************************************************************************
 //                                                                                     **  
  function sendAjaxSQLInsert(thisObjZ){
+  
+     
 
-      var idm= thisObjZ.attr("id"); //get the clicked id;
-      alert(idm);
+      var idm= thisObjZ.attr("id"); //get the clicked id, parse it and pass to AjaxInsert;
+      var NameZ=v;// get the window.name to pass; 
+      alert("button id=> "+idm +" Name=> "+ NameZ);
 
 /*
      
@@ -247,6 +284,37 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
 // **************************************************************************************
 // **************************************************************************************
 // END  sends Ajax request to Php_AjaxHandler/insertTable.php  to insert to SQL for relevant table.
+
+
+
+
+
+
+
+
+
+// ShowNameFieldsAccordition
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     **  
+ function ShowNameFieldsAccordition(ttt){
+    
+
+     //$(this).slideUp(1400);
+     $(".nnn").slideUp(1400);
+     ttt.next("p").slideDown(300)/*.siblings("p:visible").slideUp(1400)*/;      
+ //});
+
+  
+  }
+
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
+// END  showNameFields()
+
+
+
 
 
 
