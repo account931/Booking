@@ -1,8 +1,9 @@
 <?php
-
+ 
+// creates shedule,creates a hfer "book it"
 
 $tableX=$_POST['serverTableID']; //Table number
-$dateX=$_POST['serverDateID']; // Date timestamp
+$dateX=$_POST['serverDateID']; // Date timestamp // not used
 $unixX=$_POST['ServerDate_UnixID'];// Unix  var
                      
 echo "We  got-> </br>";
@@ -84,7 +85,12 @@ echo $rowF2['b_timeInterval'];
 
 
 
-//Start Core algorithm----------------------------------------------------
+
+
+//Start Core algorithm-< display items, creates URL for "Book it"---------------------------------------------------
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     **
  $resFR2 = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['ServerDate_UnixID']}' AND 	b_table ='{$_POST['serverTableID']}' ORDER BY b_timeInterval ASC     "); 
  $rowF =$resFR2->fetchAll();
 
@@ -101,7 +107,9 @@ $bIntervals=array();// array for intervals available
 		for($i=9; $i<18; $i++){
              //if time exists in array  $bIntervals, displayas taken
              if(in_array($i, $bIntervals)){ $t=$i+1; // next hour
-                                            echo "<p class='taken'> Taken =>  ".$i.  ".00-" .$t. ".00</p>";
+
+                                            $indexOf=array_search($i,$bIntervals); // find the indexOf of $i, which exists in array to use {$rowF[$indexOf]['b_booker'].}
+                                            echo "<p class='taken'> Reserved =>  ".$i.  ".00-" .$t. ".00   <span class='bookLink'>by ".    $rowF[$indexOf]['b_booker'].    "</span></p>";
 
                                           }else{
 
@@ -109,8 +117,16 @@ $bIntervals=array();// array for intervals available
                    $tz=$i+1; // i.e (10.00-Stz.00)=(10.00-11.00)
                    $unix=$_POST['ServerDate_UnixID'];//$rowF[0]['b_bookedUnix'];// first Unix stamp from row-any of them fits, Unixtime to book
                    $table=$_POST['serverTableID'];//$rowF[0]['b_table']; //table to book
+                   
+                   //echo "<div>";
+                   echo "<h6 class='free accordition'> Free =>  ".$i.  ".00-" .$tz. ".00       <span class='bookLink'  id='tbTime-$i&d-$unix&tableId-$table' > book it</span> ";
 
-                   echo "<p class='free'> Free =>  ".$i.  ".00-" .$tz. ".00       <span class='bookLink'  id='tbTime-$i&d-$unix&tableId-$table' > book it</span>       </p>";
+                   echo "<p style='display:none;margin-top:0.7em;background-color:;' class='nnn'>  Your name <input class='nameX' type='text'size='7' placeholder='name...'/> <button type='button' class='bookFinal' id='tbTime-$i&d-$unix&tableId-$table' > OK </button>  </p>";
+
+                   echo "</h6>"; // issue was here , JQ .next() is used for sibling inside PARENT// echo "<p class='free accordition'>
+
+
+                   //echo "</div>";
             
                  }   //end else
 
@@ -164,6 +180,10 @@ for($cou=$countZ; $cou<19; $cou++)
 
 
 }     // END for($cou=$countZ; $cou<18; $cou++)
+
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
 */
 //END Core algorithm-------------------------------------------------------------
 
