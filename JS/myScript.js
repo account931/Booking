@@ -87,9 +87,11 @@ $(document).on("click", '.bookFinal', function() {      //for newly generated
 		  // drawUpdatedSchedule(); // redraw refreshed schedule
 
 
-           setTimeout(sendAjaxSQLSelect(), 300);
+           setTimeout(sendAjaxSQLSelect(), 1000);
 
      }else {alert('empty');}
+
+     
 });
 // **                                                                                  **
 // **************************************************************************************
@@ -109,16 +111,16 @@ $(document).on("click", '.bookFinal', function() {      //for newly generated
 
 
 
-
+window.idm;
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     **
                                                                                     
 function tableSelectAction(thisObjZ){ //thisObj== $(this) 
-   var idm= thisObjZ.attr("id"); //get the clicked id;
+   window.idm= thisObjZ.attr("id"); //get the clicked id;
   //var idm= $("#" +id).val(); //just sample from other js
-    var idm = idm.substring(5, 6); //substring Table1, leaving just {1}
-//  alert(idm);
+    window.idm = idm.substring(5, 6); //substring Table1, leaving just {1}
+ //alert(idm);
    
    addRemoveClass(thisObjZ);
 
@@ -220,7 +222,7 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
 //                                                                                     **  
  function sendAjaxSQLSelect(){
      
-   var tableID=$("#mTableNumber").html();// alert(+tableID);
+   var tableID=idm;//$("#mTableNumber").html();// alert(+tableID);
    var dateID=funcValue.r2;//actually this value is not used //$("#myDateInput").val();   //funcValue.r2= is the way to return var ftom function(DatetoUnix(), which returns two var results
   // alert(dateID);
    var date_UnixID=funcValue.r1; //UnixTime; // from DateInputVAl  
@@ -290,12 +292,13 @@ var arrayIDz=idm.split('&');  alert("all=> "+arrayIDz); // slice link with ID to
 var TableInterval=arrayIDz[0].split('-')[1];   //alert("timeInterv=> "+TableInterval); // TAble Interval(9 till 18)
 window.TableUnix=arrayIDz[1].split('-')[1];   //we pass it drawUpdatedSchedule ()      //alert("Unix=> "+TableUnix);         // Unix Time
 window.TableID=arrayIDz[2].split('-')[1];     //we pass it drawUpdatedSchedule ()      //alert("TAbleID=> "+TableID);        // TAble ID (1-4)
+var TableID1=arrayIDz[2].split('-')[1];   alert("TAbleID=> "+TableID);     //we pass it drawUpdatedSchedule ()      //alert("TAbleID=> "+TableID);        // TAble ID (1-4)
 var TimeNormal=arrayIDz[3].split('-').slice(1).join('-') ;   // use specific slice as array [timeNormal-2017-11-29] contain several (-)        //alert(TimeNormal);  // normal time like 2017-11-29
 // END getting  the vaues from Id to pass it to ajax----               
 
 
 
-
+window.FLAGG="false";
 
 
   
@@ -305,9 +308,10 @@ var TimeNormal=arrayIDz[3].split('-').slice(1).join('-') ;   // use specific sli
                                  $.ajax({
                                  url: 'Php_AjaxHandler/insertTable.php',
                                  type: 'POST',
-                                 data: { serverInterval:TableInterval,ServerDate_UnixID:TableUnix, ServerTableID:TableID, ServerName:NameZ, ServerTimeNormal:TimeNormal},
-                                 success: function(data) {
-                                 // do something;
+                                 data: { serverInterval:TableInterval,ServerDate_UnixID:TableUnix, ServerTableID:TableID1, ServerName:NameZ, ServerTimeNormal:TimeNormal},
+                                 success: function(data) { alert(window.FLAGG);
+                                  window.FLAGG="true";
+                                 // do something; 
                                  //alert('done SQL');$('#vkTest').html(data)
                                  // $('#result').html(data);
                                  $("#ajaxResponse").html(data)/*.show(2500)*/ ;    //setTimeout(function(){ .html(data) }, 3000);
