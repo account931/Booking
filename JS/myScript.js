@@ -30,16 +30,23 @@ $(".tableSmall_Click").click(function(){
 
 
 
+
+
+
+
+
+
+
+
 //Start click on "book it" in SQL results display - just show name to book accordition
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     **
-$(document).on("click", '.bookLink', function() {      //for newly generated                                                                             
-//$(".bookLink").click(function(){
-      
-     
+$(document).on("click", '.bookLink2', function() {      //for newly generated                                                                             
+
+  
      ShowNameFieldsAccordition( $(this)  ); //show/hide name fields in accordition
-   //sendAjaxSQLInsert($(this)); //sends Ajax Insert request to Php_AjaxHandler/insertTAble.php  to insert data
+     //sendAjaxSQLInsert($(this)); //sends Ajax Insert request to Php_AjaxHandler/insertTAble.php  to insert data
 });
 // **                                                                                  **
 // **************************************************************************************
@@ -49,6 +56,11 @@ $(document).on("click", '.bookLink', function() {      //for newly generated
 
 
 
+
+
+
+
+window.v;
 
 
 
@@ -65,12 +77,18 @@ $(document).on("click", '.bookFinal', function() {      //for newly generated
      
    
 
-     window.v= $(this).prevAll('input').val();
+     window.v= $(this).prevAll('input').val(); //get the booker name input
+     //v=v.trim();
      //$(this).parent().prev().find("input[type=text]:first").val();
 
-     if( v!=""  ){
+     if( v!=""  ){  //if booker name is not empty
    
-   sendAjaxSQLInsert($(this)); //sends Ajax Insert request to Php_AjaxHandler/insertTAble.php  to insert data
+		   sendAjaxSQLInsert($(this)); //sends Ajax Insert request to Php_AjaxHandler/insertTAble.php  to insert data
+		  // drawUpdatedSchedule(); // redraw refreshed schedule
+
+
+           setTimeout(sendAjaxSQLSelect(), 300);
+
      }else {alert('empty');}
 });
 // **                                                                                  **
@@ -239,6 +257,17 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
  
 
 // sends Ajax request to Php_AjaxHandler/insertTable.php  to insert to SQL for relevant table.
@@ -249,33 +278,45 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
   
      
 
-      var idm= thisObjZ.attr("id"); //get the clicked id, parse it and pass to AjaxInsert;
-      var NameZ=v;// get the window.name to pass; 
+      var idm= thisObjZ.attr("id"); //get the clicked id, parse it and pass to AjaxInsert;  //i.e {tbTime-$i&d-$unix&tableId-$table}
+      var NameZ=window.v;// get the window.name to pass; 
       alert("button id=> "+idm +" Name=> "+ NameZ);
 
-/*
-     
-   var tableID=$("#mTableNumber").html();// alert(+tableID);
-   var dateID=funcValue.r2;//$("#myDateInput").val();   //funcValue.r2= is the way to return var ftom function(DatetoUnix(), which returns two var results
-  // alert(dateID);
-   var date_UnixID=funcValue.r1; //UnixTime; // from DateInputVAl  
-       //alert(date_UnixID);
+
+
+// Start getting  the vaues from Id to pass it to ajax--
+var arrayIDz=idm.split('&');  alert("all=> "+arrayIDz); // slice link with ID to array
+
+var TableInterval=arrayIDz[0].split('-')[1];   //alert("timeInterv=> "+TableInterval); // TAble Interval(9 till 18)
+window.TableUnix=arrayIDz[1].split('-')[1];   //we pass it drawUpdatedSchedule ()      //alert("Unix=> "+TableUnix);         // Unix Time
+window.TableID=arrayIDz[2].split('-')[1];     //we pass it drawUpdatedSchedule ()      //alert("TAbleID=> "+TableID);        // TAble ID (1-4)
+var TimeNormal=arrayIDz[3].split('-').slice(1).join('-') ;   // use specific slice as array [timeNormal-2017-11-29] contain several (-)        //alert(TimeNormal);  // normal time like 2017-11-29
+// END getting  the vaues from Id to pass it to ajax----               
+
+
+
+
+
+
+  
 
 
                         // send  data  to  PHP handler  ************ 
                                  $.ajax({
                                  url: 'Php_AjaxHandler/insertTable.php',
                                  type: 'POST',
-                                 data: { serverTableID:tableID, serverDateID:dateID,ServerDate_UnixID:date_UnixID},
+                                 data: { serverInterval:TableInterval,ServerDate_UnixID:TableUnix, ServerTableID:TableID, ServerName:NameZ, ServerTimeNormal:TimeNormal},
                                  success: function(data) {
                                  // do something;
                                  //alert('done SQL');$('#vkTest').html(data)
                                  // $('#result').html(data);
-                                  $("#ajaxResponse").html(data).show(2500);    //setTimeout(function(){ .html(data) }, 3000);
+                                 $("#ajaxResponse").html(data)/*.show(2500)*/ ;    //setTimeout(function(){ .html(data) }, 3000);
                                   }
                                           });
-                                                   // } */
+                                                   
                                                //  END AJAXed  part 
+
+
 
   
   }
@@ -293,6 +334,10 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
 
 
 
+
+
+
+
 // ShowNameFieldsAccordition
 // **************************************************************************************
 // **************************************************************************************
@@ -300,10 +345,22 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
  function ShowNameFieldsAccordition(ttt){
     
 
-     //$(this).slideUp(1400);
-     $(".nnn").slideUp(1400);
-     ttt.next("p").slideDown(300)/*.siblings("p:visible").slideUp(1400)*/;      
- //});
+                ttt.next("p").slideToggle(500)
+               .siblings("p:visible").slideUp(1400); 
+
+     //$(".nnn").not(this).hide(1400);  //.not(this)
+
+     //ttt.next("p")./*slideDown*/slideToggle(300)   /*.nextAll("p").hide(400)*/   /*.siblings('.n').slideUp(1400);*/             //siblings(".nnn").slideUp(1400);  
+    // ttt.nextAll('.nnn').not('.first').slideUp(1400);     //nextAll(".nnn").hide(300);
+      
+
+
+          
+ 
+  
+
+               /*$(this).next("p").slideToggle(500)
+               .siblings("p:visible").slideUp(1400);  */
 
   
   }
@@ -312,6 +369,91 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
 // **************************************************************************************
 // **************************************************************************************
 // END  showNameFields()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//we don't need this - confirm delete
+//  drawUpdatedSchedule() after successful booking
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     **  
+ function  drawUpdatedSchedule () {
+
+
+var tableID=window.TableID; //from sendAjaxSQLInsert(thisObjZ)
+var Unix_ID=window.TableUnix;  
+
+
+alert(Unix_ID);    
+           
+       // send  data  to  PHP handler  ************ 
+                                $.ajax({
+                                 url: 'Php_AjaxHandler/DrawUpdatedSchedule.php',
+                                 type: 'POST',
+                                 data: { ServerTableID:tableID, ServerDate_UnixID:Unix_ID},
+                                 success: function(data) {   
+                                 // do something;
+                                 //alert('done SQL');$('#vkTest').html(data)
+                                 // $('#result').html(data);
+                                  $("#ajaxResponse").html(data)/*.show(2500)*/ ;    //setTimeout(function(){ .html(data) }, 3000);
+                                  }
+                                          });
+                                                  
+                                               //  END AJAXed  part 
+
+
+
+  
+  }
+
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
+//END  drawUpdatedSchedule()  after successful booking
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
