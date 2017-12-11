@@ -9,10 +9,10 @@ $TimeNormal=$_POST['TimeNormal']; // i.e 2017-11-29
 
                  
 echo "Insert handler status-> </br>";
-echo $tableX."</br>";
+/*echo $tableX."</br>";
 echo $unixX."</br>";
 echo $interval."</br>";
-echo $nameZ."</br>";
+echo $nameZ."</br>";*/
 
 
 
@@ -54,6 +54,7 @@ $resFR = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['
 if($resFR->rowCount()==0) {
     
       echo "<p style='background-color:green;'>Feel free to take</p>"; 
+      echo "<p style='background-color:green;'>Booked successfully!!!!</p>";      
        //DB_INSERT:: Booking_Date(); //Insert algorithm located in  Classes/DB_INSERT.php
       //Booking_Date();
 

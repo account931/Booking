@@ -33,18 +33,30 @@
 
 
                     <!---------------HERE COMES the main table------->
-                     <div class="col-lg-12" id="tableMain"> <!--Start WWWx "col-lg-12-->
+                     <div class="col-lg-12" id="tableMain" "> <!--Start WWWx "col-lg-12-->
                            <!-- <center>-->
-                           <div class="row "> <!--Start Nnx left column row11-->
+                           <div class="row"   style="height:470px;"> <!--Start Nnx left column row11--> <!--ADDED HERE style="height:470px;  --> 
+
+
+
+
+
+
+
+
+
                               
-                                     <div class="col-md-2 col-xs-2 col-sm-2 "></div>                          <!-- just for left space-->  
+                                     <div class="col-md-1 col-xs-1 col-sm-1 "></div>                          <!-- just for left space-->  
 
 
 
                                   <!--------------------------START Cental info block---------->
 
-                                     <div class="col-md-8 col-xs-2 col-sm-4 tableSmall tableBig" id="tableMAin">Main <span id="mTableNumber"></span> </br> <!--tableSmall-->
-                                                               <p id="ajaxResponse" style="overflow:scroll;height:170px;">I</p>
+                                     <div class="col-md-10 col-xs-10 col-sm-10 tableSmall tableBig" id="tableMAin" style="height:470px;>Main <span id="mTableNumber"></span> </br> <!--tableSmall-->
+                                                          
+    
+     <p id="ajaxResponse" style="overflow:scroll;height:440px;">I</p> <!-- was here height:470px;-->
+      
                                      </div>  <!-- table 1-->
 
                                           
@@ -55,7 +67,7 @@
 
 
 
-                                     <div class="col-md-2 col-xs-2 col-sm-2 "></div>                          <!-- just for right space-->   
+                                     <div class="col-md-1 col-xs-1 col-sm-1 "></div>                          <!-- just for right space-->   
                                 
                                          
                            
@@ -64,6 +76,18 @@
 
 
 
+
+
+<!-------AJAX INSERT STATUS------->
+<center></br><div class="row "> 
+      <div class="col-lg-12 ajax222">
+
+            <p id="ajaxResponseInsert" style="overflow:scroll;">Insert status</p>  <!--  new ajax result --> 
+
+    </div><!----END CLASS DatePicker------>
+  </div> <!-- END ajax222-->
+</center>
+<!------AJAX INSERT STATUS-------->
 
 
                                               

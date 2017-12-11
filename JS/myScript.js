@@ -237,8 +237,14 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
                                  success: function(data) {
                                  // do something;
                                  //alert('done SQL');$('#vkTest').html(data)
-                                 // $('#result').html(data);
-                                  $("#ajaxResponse").html(data)/*.show()*/.show(2500);    //setTimeout(function(){ .html(data) }, 3000);
+                                
+                                 //$("#ajaxResponse").html(data)/*.show()*/.show(2500);    //setTimeout(function(){ .html(data) }, 3000); 
+
+            //------------------------
+
+        $("#ajaxResponse").stop().fadeOut("slow",function(){  $("#ajaxResponse").html(data) }).fadeIn(2000);
+            //------------------------
+
                                   }
                                           });
                                                    // }
@@ -254,8 +260,6 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
 // **************************************************************************************
 // **************************************************************************************
 // END sendAjaxSQLSelect() ->sends Ajax request to Php_AjaxHandler/somefil.php  to retrieves info from SQL for relevant table and HTML() it
-
-
 
 
 
@@ -314,7 +318,7 @@ window.FLAGG="false";
                                  // do something; 
                                  //alert('done SQL');$('#vkTest').html(data)
                                  // $('#result').html(data);
-                                 $("#ajaxResponse").html(data)/*.show(2500)*/ ;    //setTimeout(function(){ .html(data) }, 3000);
+                                 $("#ajaxResponseInsert").html(data)/*.show(2500)*/ ;    //setTimeout(function(){ .html(data) }, 3000);
                                   }
                                           });
                                                    

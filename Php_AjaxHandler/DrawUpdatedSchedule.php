@@ -1,26 +1,9 @@
 <?php
- 
-// creates shedule,creates a hfer "book it"
 
-$tableX=$_POST['serverTableID']; //Table number
-$dateX=$_POST['serverDateID']; // Date timestamp // 
-$unixX=$_POST['ServerDate_UnixID'];// Unix  var
-                     
-echo "We  got-> </br>";
-echo $tableX."</br>";
-echo $dateX."</br>";
-echo $unixX."</br>";
+//we don't need this - confirm delete ????
 
 
-
-
-
-
-
-
-
-//-------------------------------------
- global $conn;
+global $conn;
   
 
 include '../Classes/ConnectDB.php';
@@ -41,57 +24,11 @@ $singeltone=ConnectDB::getInstance(); //creates connection $con;  //was deactiva
 
 
 
-
-
-
-//Starts Selecting---------------------
-try {
-    //$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    
-$resFR = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['ServerDate_UnixID']}' AND 	b_table ='{$_POST['serverTableID']}' ORDER BY b_timeInterval ASC     "); //WHERE mvcFr_who LIKE '{$_SESSION['login']}'   
-
-
-
-
-//print_r($resFR->fetchAll());
-
-
-//Array length
-echo "</br>PDO rows length =>  ". $resFR->rowCount(); //works
-
-
-//single row
-//--------
- $rowF =$resFR->fetchAll();
- echo "</br>single row_0=> ".$rowF[0]['b_timeInterval']; 
- echo "</br>single row_1=> ".$rowF[1]['b_timeInterval']; 
-//--------------------
-
-
-
-
-$resFR2 = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['ServerDate_UnixID']}' AND 	b_table ='{$_POST['serverTableID']}' ORDER BY b_timeInterval ASC     "); 
-
-while ($rowF2 =$resFR2->fetch())
-   {
-echo "</br> vvvID-> ";
-echo $rowF2['b_timeInterval']; 
-    } //end while
-
-
- if($resFR->rowCount()==0){echo "</br>No record for Table ". $_POST['serverTableID'];} else  {echo "</br>Records exist ". $_POST['serverTableID'];}
-
-
-
-
-
-
-
 //Start Core algorithm-< display items, creates URL for "Book it"---------------------------------------------------
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     **
- $resFR2 = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['ServerDate_UnixID']}' AND 	b_table ='{$_POST['serverTableID']}' ORDER BY b_timeInterval ASC     "); 
+ $resFR2 = $conn->query("SELECT * FROM bookingTable WHERE b_bookedUnix ='{$_POST['ServerDate_UnixID']}' AND 	b_table ='{$_POST['ServerTableID']}' ORDER BY b_timeInterval ASC     "); 
  $rowF =$resFR2->fetchAll();
 
 
@@ -111,7 +48,7 @@ $bIntervals=array();// array for intervals available
              if(in_array($i, $bIntervals)){ $t=$i+1; // next hour
 
                                             $indexOf=array_search($i,$bIntervals); // find the indexOf of $i, which exists in array to use {$rowF[$indexOf]['b_booker'].}
-                                            echo "<h6 class='taken'> Reserved =>  ".$i.  ".00-" .$t. ".00   <span class='bookLink'>by ".    $rowF[$indexOf]['b_booker'].    "</span></h6>"; //  we have  to change <p>  to <h6> as it caused cool option to hide taken dates
+                                            echo "<p class='taken'> Reserved =>  ".$i.  ".00-" .$t. ".00   <span class='bookLink'>by ".    $rowF[$indexOf]['b_booker'].    "</span></p>";
 
                                           }else{
 
@@ -213,16 +150,24 @@ for($cou=$countZ; $cou<19; $cou++)
 
 
 
-} //end try
-catch(PDOException $e) {
-    echo "ERR-ed";
-    echo "Error: " . $e->getMessage();
-}
-$conn = null;
-//END   Selecting----------------------------
 
 
-//-------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
