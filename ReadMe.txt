@@ -26,4 +26,4 @@ Php file do Sql Select according to this vars, draw Booking Schedule. Ajax  html
 This function gets the id of clicked, parse it array and get separate values {table id, tome interval, unix time}.
 Booker name we get just from name input val (). And we start ajax request to insert. php.
 
-4.Call function Select to draw an updared schedule
+4.Call function Select to draw an updated schedule
