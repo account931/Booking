@@ -111,7 +111,7 @@ echo $header;
 
 
 //singletone DB connection+saving
-	   $singeltone=ConnectDB::getInstance();
+	  // $singeltone=ConnectDB::getInstance();// relocate to Handler->selectTable.php
 	   //$singeltone->save_to_DB();
    //end  singletone
 ?>
@@ -135,16 +135,16 @@ echo $header;
 
 <!-------------------------------------------Right SIDEBAR Column !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!---------------------------->
         <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
+        <div class="col-md-4  col-xs-2 col-sm-2">
          <center></br>
          <h1 class="centerMine">Select</h1></br></br>
          
 
                <div class="row"> <!--tables 1 row-->    
                      <div class="col-md-2 col-xs-2 col-sm-2 paddX"></div>                          <!-- just for space-->  
-                     <div class="col-md-4 col-xs-2 col-sm-4 paddX tableSmall tableSmall_Click" id="table1">1</div>  <!-- table 1-->
+                     <div class="col-md-4 col-xs-2 col-sm-4 paddX tableSmall tableSmall_Click" id="table1">Room</br> 1</div>  <!-- table 1-->
                      <div class="col-md-2 col-xs-2 col-sm-2 paddX"></div>                          <!-- just for space-->      
-                     <div class="col-md-4 col-xs-4 col-sm-4 paddX tableSmall tableSmall_Click" id="table2">2</div>              <!-- table 2-->
+                     <div class="col-md-4 col-xs-4 col-sm-4 paddX tableSmall tableSmall_Click" id="table2">Room </br> 2</div>              <!-- table 2-->
 
                </div> </br></br>           <!--END of tables 1 row-->
             
@@ -152,9 +152,9 @@ echo $header;
 
               <div class="row"> <!--tables 2 row-->
                      <div class="col-md-2 col-xs-2 col-sm-2 paddX "></div>                          <!-- just for space--> 
-                     <div class="col-md-4 col-xs-2 col-sm-4 paddX tableSmall tableSmall_Click" id="table3">3</div>   <!-- table 3-->
+                     <div class="col-md-4 col-xs-2 col-sm-4 paddX tableSmall tableSmall_Click" id="table3">Room </br>3</div>   <!-- table 3-->
                      <div class="col-md-2 col-sm-2 paddX "></div>                                   <!-- just for space-->      
-                     <div class="col-md-4 col-xs-4 col-sm-4 paddX tableSmall tableSmall_Click" id="table4">4</div>   <!-- table 4-->
+                     <div class="col-md-4 col-xs-4 col-sm-4 paddX tableSmall tableSmall_Click" id="table4">Room </br>4</div>   <!-- table 4-->
 
                </div>            <!--END of tables 2 row-->
          

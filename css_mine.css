@@ -16,6 +16,7 @@ body {
 
 
 
+
 /* small tables in left sidebar */
 .tableSmall{border:2px solid black; box-shadow: 10px 10px;}
 .tableSmall:hover{border:2px solid red; box-shadow: 10px 10px;cursor:pointer;}
@@ -24,18 +25,36 @@ body {
 
 
 
-/* Padding for right tables on mobile-makes a margin at bottom*/
+
+
+
+
+
+/* MOBILE Padding for right tables on mobile-makes a margin at bottom------------------------*/
 @media screen and (max-width: 600px){  /*480*/
 .paddX{margin-bottom:20px;}
+
+.tableBig{ border: 0.1em solid green; width:95%;margin:0 auto;} /*resizing main Table in Mobile*/
+.tableSmall{width:90%;margin:0 auto;}
 }
-/* END Padding for right tables on mobile-makes a margin at bottom*/
+/* END Padding for right tables on mobile-makes a margin at bottom-------------------------*/
+
+
+
+
+
+
+
 
 
 /*Mega fix, adding blank div 300 px height only for destop, on mobile this div turns to 10px height*/
 #div_spacing{height:300px;}
+
+
 /* Space div if only no mobile*/
 @media screen and (max-width: 600px){  /*480*/
 #div_spacing{height:10px;}
+/*.tableBig{width:98%;}*/  /* attempt to make mobile view for ajaxresponse window smaller*/
 }
 /* Space div if only no mobile*/
 
@@ -52,3 +71,9 @@ body {
 
 
 
+/*Class for taken and free dates*/
+.taken{background-color:red;border:solid red 2px;color:white;padding:1px;}
+.free{background-color:green;color:white;padding:3px;}
+
+/*Link to book a date*/
+.bookLink{font-size:0.6em; text-decoration: underline;}
