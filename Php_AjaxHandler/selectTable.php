@@ -82,8 +82,8 @@ echo $rowF2['b_timeInterval'];
  if($resFR->rowCount()==0){echo "</br>No record for Table ". $_POST['serverTableID'];} else  {echo "</br>Records exist ". $_POST['serverTableID'];}
 
 
-
-
+//Display the date
+echo "<center><p style='background-color:red;color:white;padding:2em;text-decoration:underline;border:2px solid grey;'> Schedule for "  .$dateX.  "</p></center>";
 
 
 
@@ -104,14 +104,14 @@ $bIntervals=array();// array for intervals available
                              }
 
 
- echo "<div>"; //erase
+ echo "<div>"; //erase  part
 
 		for($i=9; $i<18; $i++){
              //if time exists in array  $bIntervals, displayas taken
              if(in_array($i, $bIntervals)){ $t=$i+1; // next hour
 
                                             $indexOf=array_search($i,$bIntervals); // find the indexOf of $i, which exists in array to use {$rowF[$indexOf]['b_booker'].}
-                                            echo "<h6 class='taken'> Reserved =>  ".$i.  ".00-" .$t. ".00   <span class='bookLink'>by ".    $rowF[$indexOf]['b_booker'].    "</span></h6>"; //  we have  to change <p>  to <h6> as it caused cool option to hide taken dates
+                                            echo "<h6 class='taken'> Reserved =>  ".$i.  ".00-" .$t. ".00   <span class='bookLink'>by ".    $rowF[$indexOf]['b_booker'].    "</span>  <img id="  .$rowF[$indexOf]['b_id'].  "  style='width:5%;margin-right:0.6em;' src='delete.png'/></h6>"; //  we have  to change <p>  to <h6> as it caused cool option to hide taken dates
 
                                           }else{
 
