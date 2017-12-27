@@ -1,9 +1,10 @@
 $(document).ready(function(){
+ 
+//all calendar clicking + << >> are in datePicker/datePicker_MineProcessor.js
 
 
 
-
-//Start click on small table in right column
+//Start click on small tables in right column (Selecting the table 1-4)
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     **
@@ -18,12 +19,16 @@ $(".tableSmall_Click").click(function(){
   // DatetoDateStampSQL(); //convert time from input to SQL Datestamp ->Convert from {29-Nov-Wed-2017} to {2017-11-29}
 
    sendAjaxSQLSelect(); //sends Ajax request to Php_AjaxHandler/selectTable.php  to retrieves info from SQL for relevant table and HTML() it
+
+  $("#ajaxResponseInsert").html('Insert Status'); //clear Inset status  field
+
+
 });
 // **                                                                                  **
 // **************************************************************************************
 // **************************************************************************************
 //
-//END  click on small table in right column
+//END  click on small table in right column - (Selecting the table 1-4)
 
 
    
@@ -82,12 +87,16 @@ $(document).on("click", '.bookFinal', function() {      //for newly generated
      //$(this).parent().prev().find("input[type=text]:first").val();
 
      if( v!=""  ){  //if booker name is not empty
+
    
-		   sendAjaxSQLInsert($(this)); //sends Ajax Insert request to Php_AjaxHandler/insertTAble.php  to insert data
-		  // drawUpdatedSchedule(); // redraw refreshed schedule
+		   sendAjaxSQLInsert($(this)  ); 
+           //the above sends Ajax Insert request to Php_AjaxHandler/insertTAble.php  to insert data
+           //were trying to assign to callback,it worked but with same result!!! 
+
+		   // drawUpdatedSchedule(); // redraw refreshed schedule
 
 
-           setTimeout(sendAjaxSQLSelect(), 1000);
+          //setTimeout(sendAjaxSQLSelect(), 2000); //assigned to calback  //Injected this to  function sendAjaxSQLInsert()in Ajax success section
 
      }else {alert('empty');}
 
@@ -215,7 +224,7 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
 
 
 
-
+//CORE iS HERE
 // sends Ajax request to Php_AjaxHandler/somefil.php  to retrieves info from SQL for relevant table and HTML() it. Passes to php vars {table + date}
 // **************************************************************************************
 // **************************************************************************************
@@ -280,23 +289,23 @@ return {r1:UnixTime, r2:DateInputVAl}; //i.e Unix +{2017-11-29}   // is the way 
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     **  
- function sendAjaxSQLInsert(thisObjZ){
+ function sendAjaxSQLInsert( thisObjZ ){     // callback is not active, it worked but with same async result!!!!!
   
      
 
       var idm= thisObjZ.attr("id"); //get the clicked id, parse it and pass to AjaxInsert;  //i.e {tbTime-$i&d-$unix&tableId-$table}
       var NameZ=window.v;// get the window.name to pass; 
-      alert("button id=> "+idm +" Name=> "+ NameZ);
+      //alert("button id=> "+idm +" Name=> "+ NameZ);  //TECH!!!!
 
 
 
 // Start getting  the vaues from Id to pass it to ajax--
-var arrayIDz=idm.split('&');  alert("all=> "+arrayIDz); // slice link with ID to array
+var arrayIDz=idm.split('&');  //alert("all=> "+arrayIDz); //TECH!!!     // slice link with ID to array
 
 var TableInterval=arrayIDz[0].split('-')[1];   //alert("timeInterv=> "+TableInterval); // TAble Interval(9 till 18)
 window.TableUnix=arrayIDz[1].split('-')[1];   //we pass it drawUpdatedSchedule ()      //alert("Unix=> "+TableUnix);         // Unix Time
 window.TableID=arrayIDz[2].split('-')[1];     //we pass it drawUpdatedSchedule ()      //alert("TAbleID=> "+TableID);        // TAble ID (1-4)
-var TableID1=arrayIDz[2].split('-')[1];   alert("TAbleID=> "+TableID);     //we pass it drawUpdatedSchedule ()      //alert("TAbleID=> "+TableID);        // TAble ID (1-4)
+var TableID1=arrayIDz[2].split('-')[1];   // alert("TAbleID=> "+TableID);  //TECH!!!    //we pass it drawUpdatedSchedule ()      //alert("TAbleID=> "+TableID);        // TAble ID (1-4)
 var TimeNormal=arrayIDz[3].split('-').slice(1).join('-') ;   // use specific slice as array [timeNormal-2017-11-29] contain several (-)        //alert(TimeNormal);  // normal time like 2017-11-29
 // END getting  the vaues from Id to pass it to ajax----               
 
@@ -313,19 +322,22 @@ window.FLAGG="false";
                                  url: 'Php_AjaxHandler/insertTable.php',
                                  type: 'POST',
                                  data: { serverInterval:TableInterval,ServerDate_UnixID:TableUnix, ServerTableID:TableID1, ServerName:NameZ, ServerTimeNormal:TimeNormal},
-                                 success: function(data) { alert(window.FLAGG);
+                                 success: function(data) { //alert(window.FLAGG);
+
+                                  sendAjaxSQLSelect(); //ADDON -> Inject function in Ajax succes
                                   window.FLAGG="true";
                                  // do something; 
                                  //alert('done SQL');$('#vkTest').html(data)
                                  // $('#result').html(data);
-                                 $("#ajaxResponseInsert").html(data)/*.show(2500)*/ ;    //setTimeout(function(){ .html(data) }, 3000);
+                                 $("#ajaxResponseInsert").html(data); 
+                                  //sendAjaxSQLSelect(); //ADDON -> Inject function in Ajax success //moved upper
                                   }
                                           });
                                                    
                                                //  END AJAXed  part 
 
 
-
+     //callback(); // Callback!!!!!!!!!!!!!!!!
   
   }
 
