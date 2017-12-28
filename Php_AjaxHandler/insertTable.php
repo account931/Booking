@@ -80,7 +80,7 @@ $sth = $conn ->prepare("INSERT INTO bookingTable(b_booker, b_ip, b_table, b_time
 
 //-----------------
                           } 
-else {echo "</br>SomeOne has taken it while u were thinking";}  
+else {echo "<p style='background-color:red;'>Someone has booked it while u were thinking!</p>";   }  
 
     } //end try
 
