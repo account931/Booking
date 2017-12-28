@@ -120,6 +120,56 @@ $(document).on("click", '.bookFinal', function() {      //for newly generated
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+//Start Delete the record
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     **
+$(document).on("click", '.deleteMe', function() {      //for newly generated   
+
+        if (   confirm("Sure to delete  " +  $(this).attr("id")  + "  ?"   )) {
+                                                                          
+
+									  deleteRecordItem( $(this)  );
+										                    }else{
+										                         }
+						 
+});
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
+//
+//END  click on Delete the record
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 window.idm;
 // **************************************************************************************
 // **************************************************************************************
@@ -423,7 +473,7 @@ window.FLAGG="false";
 
 
 
-//we don't need this - confirm delete
+//  we don't need this - confirm delete
 //  drawUpdatedSchedule() after successful booking
 // **************************************************************************************
 // **************************************************************************************
@@ -467,6 +517,54 @@ alert(Unix_ID);
 
 
 
+
+
+
+
+
+
+
+
+
+// Function sends Ajax requestto delete a record.
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     **  
+ function deleteRecordItem( thisObjZ  ) {     // callback is not active, it worked but with same async result!!!!!
+  
+     
+
+      var idm= thisObjZ.attr("id"); //get the clicked id, parse it and pass to AjaxInsert;  //i.e {tbTime-$i&d-$unix&tableId-$table}
+       //alert(idm);
+
+    
+     // send  data  to  PHP handler  ************ 
+                                $.ajax({
+                                 url: 'Php_AjaxHandler/deleteRecord.php',
+                                 type: 'POST',
+                                 data: {  ServerRecordID: idm  },
+                                 success: function(data) {   
+                                 // do something;
+                                 //alert('done SQL');$('#vkTest').html(data)
+                                 // $('#result').html(data);
+                                  $("#ajaxResponseInsert").html(data)/*.show(2500)*/ ;  // display status
+                                  sendAjaxSQLSelect(); //Redraw the new shedule
+                                   } //end success
+                                           });
+                                                  
+                                               //  END AJAXed  part 
+
+
+  
+
+
+  
+  }
+
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
+// END  Function sends Ajax requestto delete a record.
 
 
 
