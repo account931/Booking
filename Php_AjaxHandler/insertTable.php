@@ -16,7 +16,25 @@ echo $nameZ."</br>";*/
 
 
 
-//$resFR = $db->query("SELECT * FROM bookingTable WHERE mvcFr_who LIKE '{$_SESSION['login']}' ");
+
+
+
+
+
+
+// Must have connection for all PHP Handlers -------------------------------------------
+		global $conn;
+
+	   /* $servername = "localhost";
+		$username = "root";
+		$password = "root";*/
+
+
+		include '../Classes/ConnectDB.php';
+		include '../Classes/DB_INSERT.php';// not working Class
+		$singeltone=ConnectDB::getInstance(); //creates connection $con;  //was deactivated in index.php
+
+// END Must have connection for all PHP Handlers ---------------------------------------
 
 
 
@@ -28,23 +46,8 @@ echo $nameZ."</br>";*/
 
 
 
-//-------------------------------------
- global $conn;
-   /* $servername = "localhost";
-    $username = "root";
-    $password = "root";*/
-
-
-
-include '../Classes/ConnectDB.php';
-include '../Classes/DB_INSERT.php';// not working Class
-$singeltone=ConnectDB::getInstance(); //creates connection $con;  //was deactivated in index.php
-
-
-
-
-// Check if any record exist, prevent dublicate inserting
-//-------------
+// Check if any record exist, prevent duplicate inserting
+//--------------------------------------------------------
 
  
 try {
@@ -106,7 +109,22 @@ $conn = null;
 
 
 
-// Start StartBooking()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Start StartBooking() // IS not used so far, as calling function causes crashing, as well as using CLASS::STATIC
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     **  

@@ -12,22 +12,27 @@ $recordID=$_POST['ServerRecordID']; //Table number
 
 
 
-//-------------------------------------
-global $conn;
-  
+// Must have connection for all PHP Handlers -------------------------------------
+global $conn;  
 
 include '../Classes/ConnectDB.php';
-$singeltone=ConnectDB::getInstance(); //creates connection $con;  //was deactivated in index.php
+$singeltone=ConnectDB::getInstance(); //creates connection $conn;  //was deactivated in index.php
+
+// END Must have connection for all PHP Handlers -------------------------------------
 
 
 
 
 
 // sql to delete a record
-    $sql = "DELETE FROM bookingTable WHERE b_id=$recordID";
-    //echo $sql;
+		$sql = "DELETE FROM bookingTable WHERE b_id=$recordID";
+		//echo $sql;
 
 
+
+
+
+// SQL Execute GO!!!!--------------------------------------
 try {
    // use exec() because no results are returned
     $conn->exec($sql);
@@ -38,10 +43,6 @@ catch(PDOException $e)
     echo $sql . "<br>" . $e->getMessage();
     }
 
-
-
-
-
-
+// END EXECUTE SQL GO!!!!!!!----------------------------------
 
 ?>

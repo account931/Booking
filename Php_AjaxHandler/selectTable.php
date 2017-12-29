@@ -1,6 +1,6 @@
 <?php
  
-// creates shedule,creates a hfer "book it"
+// creates shedule,generates links to book/delete entries (creates <a href> "book it"</a>)
 
 $tableX=$_POST['serverTableID']; //Table number
 $dateX=$_POST['serverDateID']; // Date timestamp // 
@@ -19,15 +19,13 @@ echo $unixX."</br>";
 
 
 
-//-------------------------------------
- global $conn;
-  
+// Must have connection for all PHP Handlers, creates $conn-----------------------------------------------
+			global $conn; 
 
-include '../Classes/ConnectDB.php';
-$singeltone=ConnectDB::getInstance(); //creates connection $con;  //was deactivated in index.php
+			include '../Classes/ConnectDB.php';
+			$singeltone=ConnectDB::getInstance(); //creates connection $con;  //was deactivated in index.php
 
-
-
+// END  Must have connection for all PHP Handlers, creates $conn-------------------------------------------
 
 
 
@@ -44,7 +42,7 @@ $singeltone=ConnectDB::getInstance(); //creates connection $con;  //was deactiva
 
 
 
-//Starts Selecting---------------------
+//Starts Selecting (Just fot technical info)---------------------
 try {
     //$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     
@@ -91,7 +89,14 @@ echo "<center><p style='background-color:green;color:white;padding:2em;text-deco
 
 
 
-//Start Core algorithm-< display items, creates URL for "Book it"---------------------------------------------------
+
+
+
+
+
+
+
+//Start Core algorithm-< display items, creates URL for "Book it"---
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     **
@@ -100,7 +105,7 @@ echo "<center><p style='background-color:green;color:white;padding:2em;text-deco
 
 
 
-// Start Working CORE alternative-------------
+// Start Working CORE -------------
 $bIntervals=array();// array for intervals available 
 
 		foreach($rowF as $ss){
@@ -159,7 +164,9 @@ $bIntervals=array();// array for intervals available
 
  echo "</div>"; //erase
 
-// END  alternative---------------------
+
+
+// END Start Working CORE -------------------------------
 
 
 
@@ -168,11 +175,7 @@ $bIntervals=array();// array for intervals available
 
 
 
-
-
-
-
-
+//it was prev attempt, which resulted in some glitched
 /*
 $countZ=9; //9 hours
 
@@ -211,7 +214,7 @@ for($cou=$countZ; $cou<19; $cou++)
 // **************************************************************************************
 // **************************************************************************************
 */
-//END Core algorithm-------------------------------------------------------------
+//END Core algorithm--------
 
 
 
@@ -226,7 +229,7 @@ $conn = null;
 //END   Selecting----------------------------
 
 
-//-------------------------------
+//-------
 
 
 
