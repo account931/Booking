@@ -138,9 +138,13 @@ var selectedDate = "";
     selectedDateX=dateArray[0]+  '-'    +  Monthh[monthAdopted] + "-"+ r +  "-" + dateArray[2]  ; // date-month(Oct,Nov)-weekDay-Year
 	$("#myDateInput").val(selectedDateX); //sets the date to input
 	$("#calendarPick").val("Calendar"); //rename the buttion to calendar agian
+
+     onLeftRightCalendarClick_ResetMainArea();
 		
-    },
+    },// END   onSelect: function(date) {
 	
+
+  
   });
 // **                                                                                  **
 // **************************************************************************************
@@ -152,8 +156,23 @@ var selectedDate = "";
 
 
 
+
+
+
+
+
+
+
+
+
+
 window.decr=1;     // << Prev global var
 window.decrNext=1; // >> NExt global var
+
+
+
+
+
 
 
 
@@ -179,14 +198,18 @@ window.decrNext=1; // >> NExt global var
             //var objectMonth = { Jan:"0",Feb:"1",Mar:"2",Apr:"3",May:"4",Jun:"5",Jul:"6",Aug:"7",Sep:"8",Oct:"9",Nov:"10", Dec:"11"};// creat object as no assoc array in JS
             //var c=dateSplit[1];alert (c);
             //alert(objectMonth[c]);
-            var adoptedDateFormat=dateSplit[3]+ "," +objectMonth[dateSplit[1]]+","+dateSplit[0];    //set to format duitable for JS (YYYY,MM, DD)
+			
+			//get the 2nd array element (i.e Feb), find it position in array, make +1
+			var monthSplit= Monthh.indexOf(dateSplit[1]);   monthSplit=parseInt(monthSplit)+1;        //alert(monthSplit);
+			
+            var adoptedDateFormat=dateSplit[3]+ "," + /*objectMonth[dateSplit[1]]*/ monthSplit+","+dateSplit[0];    //set to format duitable for JS (YYYY,MM, DD)
             //alert (adoptedDateFormat);
      // END here we split the php dtae to format fits for '2017,9,13' format---------
     //END =>below is temp disabled, as cause 50% error. This section was used to form {var adoptedDateFormat} and use it in {var date = new Date(adoptedDateFormat)}
 //------------------------------
       //alert (adoptedDateFormat); alerting date
 //get date object .(adoptedDateFormat)  in argument is a a specific date 
-     var date = new Date(/*adoptedDateFormat*/); //var date = new Date('04/28/2013 00:00:00');  // must be 2017,9,13'  // creates new date based on input time gen by PHP
+     var date = new Date(adoptedDateFormat); //var date = new Date('04/28/2013 00:00:00');  // must be 2017,9,13'  // creates new date based on input time gen by PHP
      
 var yesterday = new Date(date.getTime() -(window.decr*24*60*60*1000)); //24*60*60*1000 // gets the date  -1 day
     //--start function
@@ -206,7 +229,7 @@ var yesterday = new Date(date.getTime() -(window.decr*24*60*60*1000)); //24*60*6
       yesterday=curr_date+"-"+Monthh[curr_month]   +"-" +r+  '-'+curr_year;
 //End function-----------------------
       $("#myDateInput").val(yesterday); 
-      window.decr++;  // must be commented if u try to get date value from input
+      //window.decr++;  // must be commented if u try to get date value from input
 
 
 //--------------------
@@ -253,12 +276,16 @@ var yesterday = new Date(date.getTime() -(window.decr*24*60*60*1000)); //24*60*6
             var objectMonth = {Oct:"9", model:"500", color:"white"};// creat object as no assoc array in JS
             //var c=dateSplit[1];alert (c);
             //alert(objectMonth[c]);
-            var adoptedDateFormat=dateSplit[3]+ "," +objectMonth[dateSplit[1]]+","+dateSplit[0];    //set to format duitable for JS (YYYY,MM, DD)
+			
+			//get the 2nd array element (i.e Feb), find it position in array, make +1
+			var monthSplit= Monthh.indexOf(dateSplit[1]);   monthSplit=parseInt(monthSplit)+1;        //alert(monthSplit);
+			
+            var adoptedDateFormat=dateSplit[3]+ "," +/*objectMonth[dateSplit[1]]*/ monthSplit+","+dateSplit[0];    //set to format duitable for JS (YYYY,MM, DD)
             //alert (adoptedDateFormat);
      // END here we split the php dtae to format fits for '2017,9,13' format---------
   
 //get date object
-     var date = new Date(/*adoptedDateFormat*/); //var date = new Date('04/28/2013 00:00:00');  // must be 2017,9,13'  // creates new date based on input time gen by PHP
+     var date = new Date(adoptedDateFormat); //var date = new Date('04/28/2013 00:00:00');  // must be 2017,9,13'  // creates new date based on input time gen by PHP
      var yesterday = new Date(date.getTime() +(decrNext*24*60*60*1000)); //24*60*60*1000 // gets the date  -1 day
     //
      var curr_date =yesterday.getDate();
@@ -277,7 +304,7 @@ var yesterday = new Date(date.getTime() -(window.decr*24*60*60*1000)); //24*60*6
 //getting all together 
       yesterday=curr_date+"-"+Monthh[curr_month]   +"-" +r+  '-'+curr_year;
       $("#myDateInput").val(yesterday); 
-      decrNext++; 
+      //decrNext++; 
 
 //--------------------
 // Refresh main field area on <<  >> click
