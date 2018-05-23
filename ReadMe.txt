@@ -12,3 +12,4 @@ How it works:
 2.1 Php file creates Free/Taken <p> with unique id {id="table-1&time-256677".
 3.When clicking on "book it", we display hidden name input, when u fill it and click OK, it starts function SqlInsert. This function gets the id of clicked, parses it array and gets separated values {table id, tome interval, unix time}. Booker name we get just from name input val(). And we start ajax request to insert php.
 4.Call function Select to draw an updated schedule.
+5.
